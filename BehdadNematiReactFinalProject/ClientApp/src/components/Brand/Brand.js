@@ -9,20 +9,20 @@ export class Brand extends Component {
         this.GetBrandLst = this.GetBrandLst.bind(this);
         this.Delete = this.Delete.bind(this);
         this.state = { brands: [] };
-        fetch(`/api/Product/GetBrands`).then(x => x.json()).then(x => this.setState({ brands: x }));
+        fetch(`/api/Brand/GetBrands`).then(x => x.json()).then(x => this.setState({ brands: x }));
     }
     //componentDidMount() {
     //    this.GetBrandLst();
     //}
-    GetBrandLst() { 
-        fetch(`/api/Product/GetBrands`).then(x => x.json()).then(x => this.setState({ brands: x }));
+    GetBrandLst(s) { 
+        fetch(`/api/Brand/GetBrands?Search=${s}`).then(x => x.json()).then(x => this.setState({ brands: x }));
     }
     Delete(id) {
         
-        fetch(`/api/Product/DeleteBrand?id=${id}`,
+        fetch(`/api/Brand/DeleteBrand?id=${id}`,
             { method: 'get' }).then(x => x.json()).then(x => {
                 if (x.result) {
-                    this.GetBrandLst();
+                    this.GetBrandLst(null);
                     alert("Deleted");
                 }
             });

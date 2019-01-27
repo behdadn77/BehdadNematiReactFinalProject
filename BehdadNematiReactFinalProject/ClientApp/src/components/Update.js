@@ -3,7 +3,9 @@ import React, { Component } from 'react';
 export class Update extends Component {
     constructor(props) {
         super(props);
-        this.state = { productId: this.props.match.params.productId };
+        
+        this.state = { productId: this.props.match.params.productId, brands: []};
+        fetch(`/api/Brand/GetBrands`).then(x => x.json()).then(x => this.setState({ brands: x }));
         fetch(`/api/product/GetProductById?Id=${this.state.productId}`)
             .then(x => x.json()).then(x => {
                 document.getElementById('name').value = x.name;
@@ -11,6 +13,7 @@ export class Update extends Component {
                 document.getElementById('count').value = x.count;
                 document.getElementById('imgpreview').src = x.img;
                 document.getElementById('Id').value = x.id;
+                document.getElementById('BrandCombo').value = x.Brand_id;
             });
     }
     onChooseImage = () => {
@@ -40,6 +43,16 @@ export class Update extends Component {
                 <div className="form-group">
                     <label>Count</label>
                     <input className="form-control" type="text" name="count" id="count"/>
+                </div>
+                <div className="form-group">
+                    <label>Brand</label>
+                    <select className="form-control" type="number" name="brand_id" id="BrandCombo">
+                        {
+                            this.state.brands.map((x, index) =>
+                                <option value={x.id} selected="selected">{x.name}</option>
+                            )
+                        }
+                    </select>
                 </div>
                 <div className="form-group">
                     <label>Product Image</label>

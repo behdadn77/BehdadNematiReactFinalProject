@@ -10,6 +10,7 @@ namespace BehdadNematiReactFinalProject.Models.ViewModel
         public int Id { get; set; }
         public string Name { get; set; }
         public string img { get; set; }
+        public ICollection<Product> products { get; set; }
     }
 }
 

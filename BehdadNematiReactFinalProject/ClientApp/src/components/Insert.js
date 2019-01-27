@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
+import { Brand } from './Brand/Brand';
 
 export class Insert extends Component {
     constructor() {
         super();
         //this.Insert = this.Insert.bind(this);
         this.onChooseImage = this.onChooseImage.bind(this);
+        this.state = { brands: [] };
+        fetch(`/api/Brand/GetBrands`).then(x => x.json()).then(x => this.setState({ brands: x }));
     }
     onChooseImage = () => {
         var reader = new FileReader();
@@ -45,6 +48,16 @@ export class Insert extends Component {
                 <div className="form-group">
                     <label>Count</label>
                     <input className="form-control" type="number" name="count"  />
+                </div>
+                <div className="form-group">
+                    <label>Brand</label>
+                    <select className="form-control" type="number" name="brand_id" ref="BrandCombo">
+                        {
+                            this.state.brands.map((x, index) =>
+                                <option value={x.id} selected="selected">{x.name}</option>
+                            )
+                        }
+                    </select>
                 </div>
                 <div className="form-group">
                     <label>Product Image</label>

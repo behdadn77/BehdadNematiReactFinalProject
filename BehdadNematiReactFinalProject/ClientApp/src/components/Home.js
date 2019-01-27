@@ -57,7 +57,7 @@ export class Home extends Component {
                                 <td>{x.name}</td>
                                 <td>{x.price}</td>
                                 <td>{x.count}</td>
-                                <td></td>
+                                <td>{x.brand.name}</td>
                                 <td>
                                     <img src={x.img} height="40" width="40"/>
                                 </td>

@@ -86,7 +86,7 @@ namespace BehdadNematiReactFinalProject.Controllers
 
         [HttpPost("[action]")]
 
-        public IActionResult InsertPorduct([FromForm] BrandViewModel p, IFormFile file1)
+        public IActionResult InsertBrand([FromForm] BrandViewModel p, IFormFile file1)
         {
             Brand brand = new Brand()
             {

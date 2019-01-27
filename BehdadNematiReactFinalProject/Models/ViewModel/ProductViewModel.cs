@@ -12,5 +12,7 @@ namespace BehdadNematiReactFinalProject.Models.ViewModel
         public int Price { get; set; }
         public int Count { get; set; }
         public string img { get; set; }
+        public int brand_id { get; set; }
+        public Brand Brand { get; set; }
     }
 }

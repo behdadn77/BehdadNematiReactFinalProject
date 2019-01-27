@@ -6,6 +6,7 @@ using BehdadNematiReactFinalProject.Models;
 using BehdadNematiReactFinalProject.Models.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BehdadNematiReactFinalProject.Controllers
 {
@@ -24,22 +25,26 @@ namespace BehdadNematiReactFinalProject.Controllers
         {
             if (Search!=null)
             {
-                return db.products.Where(x => x.Name.Contains(Search)).ToList()
+                return db.products.Where(x => x.Name.Contains(Search))
+                    .Include(x => x.Brand).ToList()
                     .Select(x => new ProductViewModel
                     {
                         Id = x.Id,
                         Name = x.Name,
                         Price = x.Price,
                         img = x.Img == null ? "not found" : $"data:image/jpeg;base64,{Convert.ToBase64String(x.Img)}",
-                        Count = x.Count
+                        Count = x.Count,
+                        Brand = x.Brand
                     }).ToList();
             }
-            return db.products.ToList().Select(x => new ProductViewModel {
-                Id = x.Id,
-                Name = x.Name,
-                Price = x.Price,
-                img =x.Img==null ?"not found":$"data:image/jpeg;base64,{Convert.ToBase64String(x.Img)}",
-                Count=x.Count
+            return db.products.Include(x => x.Brand).ToList()
+                .Select(x => new ProductViewModel {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Price = x.Price,
+                    img = x.Img == null ? "not found" : $"data:image/jpeg;base64,{Convert.ToBase64String(x.Img)}",
+                    Count = x.Count,
+                    Brand = x.Brand
             }).ToList();
         }
         [HttpGet("[action]")]
@@ -53,6 +58,7 @@ namespace BehdadNematiReactFinalProject.Controllers
                 Name = p.Name,
                 Price = p.Price,
                 Count = p.Count,
+                brand_id=p.Brand_Id,
                 img = $"data:image/jpeg;base64,{Convert.ToBase64String(p.Img)}"
             };
         }
@@ -66,6 +72,7 @@ namespace BehdadNematiReactFinalProject.Controllers
                 p.Name = pp.Name;
                 p.Price = pp.Price;
                 p.Count = pp.Count;
+                p.Brand_Id = pp.brand_id;
                 if (file1 != null)
                 {
                     byte[] b = new byte[file1.Length];
@@ -100,7 +107,9 @@ namespace BehdadNematiReactFinalProject.Controllers
             {
                 Name = p.Name,
                 Price = p.Price,
-                Count = p.Count
+                Count = p.Count,
+                Brand_Id=p.brand_id
+                
             };
             byte[] b = new byte[file1.Length];
             file1.OpenReadStream().Read(b, 0, b.Length);

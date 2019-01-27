@@ -16,7 +16,7 @@ export class InsertBrand extends Component {
     return (
       <div>
             <form className="container offset-md-2 col-md-8" style={{ border: '2px solid cyan' }}
-                action="/api/Product/InsertPorduct"
+                action="/api/Brand/InsertBrand"
                 method="post" enctype="multipart/form-data">
                 <h1>Insert Brand</h1> 
                 <div className="form-group">
